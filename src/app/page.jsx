@@ -47,23 +47,26 @@ const Home = () => {
     }
   };
 
-  const { messages, sendMessage, status, regenerate, stop } = useChat({
+  const { messages, sendMessage, status, regenerate } = useChat({
     onFinish: () => {
       setLoading(false);
       setText("");
     },
   });
-  console.log(`🚀 ~ Home ~ messages:`, messages);
 
   const handleSubmit = () => {
     setLoading(true);
     sendMessage({
       text,
-      files: pollingStation.map((psNo) => ({
-        type: "file",
-        url: `https://www.eci.gov.in/sir/f2/S12/data/OLDSIRROLL/S12/219/S12_219_${psNo}.pdf`,
-        mediaType: "application/pdf",
-      })),
+      ...(messages.length
+        ? {}
+        : {
+            files: pollingStation.map((psNo) => ({
+              type: "file",
+              url: `https://www.ecivoters.vercel.app/${psNo}.pdf`,
+              mediaType: "application/pdf",
+            })),
+          }),
     });
   };
 
@@ -97,7 +100,7 @@ const Home = () => {
         <div className="flex items-start justify-start gap-2">
           <Label>Polling Stations (Total: 161)</Label>
           <div className="overflow-x-auto flex gap-2 w-full pb-4">
-            {Array.from({ length: 161 }, (_, i) => i + 1).map((psNo) => (
+            {["52", "53", "54", "55"].map((psNo) => (
               <Button
                 size={"icon"}
                 key={psNo}
