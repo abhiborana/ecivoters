@@ -27,11 +27,9 @@ import { Spinner } from "@/components/ui/spinner";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useChat } from "@ai-sdk/react";
 import { MessageSquareIcon, RefreshCcwIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 
 const Home = () => {
-  const { refresh } = useRouter();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [pollingStation, setPollingStation] = useLocalStorage(
@@ -45,6 +43,10 @@ const Home = () => {
     } else {
       setPollingStation([...pollingStation, psNo]);
     }
+  };
+
+  const refresh = () => {
+    window.location.reload();
   };
 
   const { messages, sendMessage, status, regenerate } = useChat({
@@ -63,8 +65,9 @@ const Home = () => {
         : {
             files: pollingStation.map((psNo) => ({
               type: "file",
-              url: `https://www.ecivoters.vercel.app/${psNo}.pdf`,
+              url: psNo.url,
               mediaType: "application/pdf",
+              filename: `${psNo.label}-Ratlam.pdf`,
             })),
           }),
     });
@@ -93,22 +96,44 @@ const Home = () => {
               className="cursor-pointer"
               onClick={() => handleSetPollingStation(psNo)}
             >
-              {psNo}- RATLAM <XIcon className="size-3" />
+              {psNo.label}- RATLAM <XIcon className="size-3" />
             </Badge>
           ))}
         </div>
         <div className="flex items-start justify-start gap-2">
           <Label>Polling Stations (Total: 161)</Label>
           <div className="overflow-x-auto flex gap-2 w-full pb-4">
-            {["52", "53", "54", "55"].map((psNo) => (
+            {[
+              {
+                label: "52",
+                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFB8QaTxzWadUQ9T1nGtpBEhJfRqVKbmXec5YI",
+              },
+              // "53","54","55",
+              {
+                label: "53",
+                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFRbTmPuX8XU5tWnbjodpuD7lyqS46mzKk1Ixv",
+              },
+              {
+                label: "54",
+                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFalBhLAVyDCBREn1AOvY45QeNWImuUtihHbpk",
+              },
+              {
+                label: "55",
+                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFSU8bCgBOYNdF7AHelIrD1fUTVjR3MLoZ6a2B",
+              },
+            ].map((psNo) => (
               <Button
                 size={"icon"}
-                key={psNo}
-                variant={pollingStation.includes(psNo) ? "default" : "outline"}
+                key={psNo.label}
+                variant={
+                  pollingStation.filter((p) => p.label === psNo.label).length
+                    ? "default"
+                    : "outline"
+                }
                 className="cursor-pointer"
                 onClick={() => handleSetPollingStation(psNo)}
               >
-                {psNo}
+                {psNo.label}
               </Button>
             ))}
           </div>
