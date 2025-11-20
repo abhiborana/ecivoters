@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         <main className="flex-1 p-2 md:p-4">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
