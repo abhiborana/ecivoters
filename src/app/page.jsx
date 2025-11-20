@@ -33,7 +33,7 @@ const Home = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [pollingStation, setPollingStation] = useLocalStorage(
-    "pollingStation",
+    "polling-st-rtm",
     []
   );
 
