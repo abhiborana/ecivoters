@@ -38,8 +38,10 @@ const Home = () => {
   );
 
   const handleSetPollingStation = (psNo) => {
-    if (pollingStation.includes(psNo)) {
-      setPollingStation(pollingStation.filter((num) => num !== psNo));
+    const exists = pollingStation.find((ps) => ps.label === psNo.label);
+    if (exists) {
+      const updated = pollingStation.filter((ps) => ps.label !== psNo.label);
+      setPollingStation(updated);
     } else {
       setPollingStation([...pollingStation, psNo]);
     }
