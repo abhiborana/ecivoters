@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
 import { Geist } from "next/font/google";
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="flex-1 p-2 md:p-4">{children}</main>
         <Analytics />
+        <Toaster theme="light" richColors />
       </body>
     </html>
   );

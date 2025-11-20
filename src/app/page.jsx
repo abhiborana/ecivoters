@@ -28,6 +28,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { useChat } from "@ai-sdk/react";
 import { MessageSquareIcon, RefreshCcwIcon, XIcon } from "lucide-react";
 import { Fragment, useState } from "react";
+import { toast } from "sonner";
 
 const Home = () => {
   const [text, setText] = useState("");
@@ -55,6 +56,12 @@ const Home = () => {
     onFinish: () => {
       setLoading(false);
       setText("");
+    },
+    onError: (err) => {
+      console.error(`🚀 ~ Home ~ err:`, err);
+      toast.error(err.message);
+      toast.error("Fetch Failed. Contact Admin.");
+      setLoading(false);
     },
   });
 
