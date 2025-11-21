@@ -34,7 +34,7 @@ const Home = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [pollingStation, setPollingStation] = useLocalStorage(
-    "polling-st-rtm",
+    "polling-st-rtm-vishal",
     []
   );
 
@@ -69,16 +69,12 @@ const Home = () => {
     setLoading(true);
     sendMessage({
       text,
-      ...(messages.length
-        ? {}
-        : {
-            files: pollingStation.map((psNo) => ({
-              type: "file",
-              url: psNo.url,
-              mediaType: "application/pdf",
-              filename: `${psNo.label}-Ratlam.pdf`,
-            })),
-          }),
+      files: pollingStation.map((psNo) => ({
+        type: "file",
+        url: psNo.url,
+        mediaType: "application/pdf",
+        filename: `${psNo.label}-Ratlam.pdf`,
+      })),
     });
   };
 
@@ -115,20 +111,20 @@ const Home = () => {
             {[
               {
                 label: "52",
-                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFB8QaTxzWadUQ9T1nGtpBEhJfRqVKbmXec5YI",
+                url: `${process.env.NEXT_PUBLIC_UPLOADTHING_URL}/SUFb4V4OYNdFmx8PvW4RjHqXKfVrANz2MJ0ghwteOTPmZL91`,
               },
               // "53","54","55",
               {
                 label: "53",
-                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFRbTmPuX8XU5tWnbjodpuD7lyqS46mzKk1Ixv",
+                url: `${process.env.NEXT_PUBLIC_UPLOADTHING_URL}/SUFb4V4OYNdFPu8vqvSG84bzsouVmRylBZ371gQqci9UL0DY`,
               },
               {
                 label: "54",
-                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFalBhLAVyDCBREn1AOvY45QeNWImuUtihHbpk",
+                url: `${process.env.NEXT_PUBLIC_UPLOADTHING_URL}/SUFb4V4OYNdF2abjhr1ykHesRPvLz6UIwW59gJXEBoiuY8y4`,
               },
               {
                 label: "55",
-                url: "https://8f5yg79wnw.ufs.sh/f/SUFb4V4OYNdFSU8bCgBOYNdF7AHelIrD1fUTVjR3MLoZ6a2B",
+                url: `${process.env.NEXT_PUBLIC_UPLOADTHING_URL}/SUFb4V4OYNdFcevOQi6j4A6PHM5CFJiLZgwzvk02YhWfmXau`,
               },
             ].map((psNo) => (
               <Button
